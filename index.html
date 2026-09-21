@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Telecom Site Parameters Sheet</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%230a2a6c'/%3E%3Cpath d='M24 14 15 38M24 14l9 24M19 28h10M17 34h14' stroke='white' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='11' r='3' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<!-- every icon below is a fully self-contained <svg> (no <use>/<symbol> sprite refs) so the
+     "download as image" export can never lose them - sprite refs are not reliably captured
+     by DOM-to-image exporters. -->
+
+<button type="button" class="snap-btn" id="snapBtn" title="Download as Image" aria-label="Download this site sheet as an image" disabled>
+  <svg class="ic" viewBox="0 0 48 48" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 5v24M14.5 19.5 24 29l9.5-9.5"/><path d="M7 33v6a4 4 0 0 0 4 4h26a4 4 0 0 0 4-4v-6"/>
+    </g>
+  </svg>
+</button>
+
+<main class="sheet" id="sheet">
+
+  <!-- ============================== title ============================== -->
+  <header class="top">
+    <div class="top-ico">
+      <svg class="ic" viewBox="0 0 48 48" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.2 7a10 10 0 0 0 0 10"/><path d="M30.8 7a10 10 0 0 1 0 10"/>
+          <path d="M12.6 3.6a16 16 0 0 0 0 16.8"/><path d="M35.4 3.6a16 16 0 0 1 0 16.8"/>
+          <path d="M24 15 14 44M24 15l10 29"/>
+          <path d="M20.5 25h7M16.4 37h15.2M20.5 25l11.1 12M27.5 25 16.4 37M12 44h24"/>
+        </g>
+        <circle cx="24" cy="12" r="2.8" fill="currentColor"/>
+      </svg>
+    </div>
+    <h1 class="banner"><span>Telecom Site Parameters Sheet</span></h1>
+    <div class="top-ico">
+      <svg class="ic" viewBox="0 0 52 48" aria-hidden="true">
+        <g fill="currentColor">
+          <rect x="1" y="33" width="9" height="12" rx="2"/><rect x="14" y="25" width="9" height="20" rx="2"/>
+          <rect x="27" y="14" width="9" height="31" rx="2"/><rect x="40" y="2" width="9" height="43" rx="2"/>
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- ========================== data source ============================ -->
+    <section class="source" id="source" aria-label="Data source">
+      <div class="source-main">
+        <div class="source-title">
+          <svg class="ic" viewBox="0 0 48 48" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="24" cy="11" rx="15" ry="6"/><path d="M9 11v13c0 3.3 6.7 6 15 6s15-2.7 15-6V11"/><path d="M9 24v13c0 3.3 6.7 6 15 6s15-2.7 15-6V24"/>
+            </g>
+          </svg>
+          <span>Data Source</span>
+        </div>
+
+        <label class="drop" id="drop" for="fileInput">
+          <input type="file" id="fileInput" accept=".xlsx,.xlsm,.csv" multiple hidden>
+          <svg class="ic" viewBox="0 0 48 48" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 31V8M14.5 16.5 24 7l9.5 9.5"/><path d="M7 30v8a4 4 0 0 0 4 4h26a4 4 0 0 0 4-4v-8"/>
+            </g>
+          </svg>
+          <span class="drop-text">
+            <b id="dropTitle">Upload Excel file</b>
+            <small id="dropHint">Drop it here or click to browse &middot; .xlsx .xlsm .csv</small>
+          </span>
+          <span class="progress" id="progress" hidden><i id="progressBar"></i></span>
+        </label>
+
+        <div class="stats" id="stats">
+          <div class="stats-line" id="statsLine">Loading&hellip;</div>
+          <div class="stats-sub" id="statsSub"></div>
+        </div>
+
+        <button type="button" class="files-btn" id="filesBtn" aria-expanded="false" aria-controls="files">
+          <span>Files</span><span class="count" id="filesCount">0</span>
+          <svg class="ic chev" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="files" id="files" hidden>
+        <p class="rule">Same file name <b>replaces</b> the stored file &nbsp;&middot;&nbsp; a new file name is <b>added</b> and used together with the others (newest upload wins for the same cell).</p>
+        <ul class="file-list" id="fileList"></ul>
+      </div>
+    </section>
+
+    <!-- ===================== site code / region / city =================== -->
+    <section class="row-top">
+      <div class="box site-box">
+        <span class="badge">
+          <svg class="ic" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 45C24 45 8 30 8 19a16 16 0 0 1 32 0c0 11-16 26-16 26z" fill="currentColor"/>
+            <circle cx="24" cy="15.5" r="4.6" fill="#fff"/>
+            <path d="M15.6 28c1.2-5 4.6-7.2 8.4-7.2s7.2 2.2 8.4 7.2z" fill="#fff"/>
+          </svg>
+        </span>
+        <label class="xl" for="siteInput">Site Code</label>
+        <div class="field">
+          <input id="siteInput" class="input main" type="text" autocomplete="off" spellcheck="false"
+                 placeholder="Type site code or name" role="combobox" aria-expanded="false" aria-controls="suggest">
+          <button type="button" class="clear" id="clearBtn" title="Clear" hidden>
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <ul class="suggest" id="suggest" role="listbox" hidden></ul>
+        </div>
+      </div>
+
+      <div class="box rc-box">
+        <div class="rc"><label for="region">Region</label><input id="region" class="input" readonly tabindex="-1"></div>
+        <div class="rc"><label for="city">City</label><input id="city" class="input" readonly tabindex="-1"></div>
+      </div>
+    </section>
+    <div class="msg" id="msg" role="status" aria-live="polite" hidden></div>
+
+    <!-- ============================== GPS =============================== -->
+    <section class="box gps">
+      <div class="gps-title">
+        <svg class="ic" viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 45C24 45 8 30 8 19a16 16 0 0 1 32 0c0 11-16 26-16 26z" fill="currentColor"/>
+          <circle cx="24" cy="19" r="6" fill="#fff"/>
+        </svg>
+        <span>GPS COORDINATES</span>
+      </div>
+      <div class="gps-f"><label for="xCoord">X Coordinate</label><input id="xCoord" class="input" readonly tabindex="-1"></div>
+      <div class="gps-f"><label for="yCoord">Y Coordinate</label><input id="yCoord" class="input" readonly tabindex="-1"></div>
+    </section>
+
+    <!-- ============================ parameters =========================== -->
+    <section id="table" class="tbl" aria-label="Sector parameters"></section>
+    <div class="meta">
+      <span class="sig-name">Eng Aysar Majid</span>
+      <div class="caption" id="caption" hidden></div>
+    </div>
+
+    <!-- ============================== notes ============================= -->
+    <section class="box notes">
+      <div class="notes-ico">
+        <svg class="ic" viewBox="0 0 48 48" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="7" width="32" height="37" rx="4"/>
+            <path d="M17 7V5.5A1.5 1.5 0 0 1 18.5 4h11A1.5 1.5 0 0 1 31 5.5V7"/>
+            <path d="M19 19h14M19 27h14M19 35h14"/>
+          </g>
+          <g fill="currentColor"><circle cx="14" cy="19" r="1.7"/><circle cx="14" cy="27" r="1.7"/><circle cx="14" cy="35" r="1.7"/></g>
+        </svg>
+      </div>
+      <div class="notes-body">
+        <label for="notes">Notes :</label>
+        <textarea id="notes" rows="2" spellcheck="false" disabled placeholder="Select a site to add notes"></textarea>
+        <span class="saved" id="saved" aria-live="polite"></span>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="static/js/vendor/xlsx.full.min.js"></script>
+<script src="static/js/vendor/dom-to-image-more.min.js"></script>
+<script src="static/js/parser.js"></script>
+<script src="static/js/store.js"></script>
+<script src="static/js/app.js"></script>
+</body>
+</html>
